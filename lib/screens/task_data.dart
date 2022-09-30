@@ -9,39 +9,37 @@ class TaskData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: Provider.of<Controller>(context).taskList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-            title: Text(
-              Provider.of<Controller>(context).taskList[index],
-              style: TextStyle(
-                  decoration: Provider.of<Controller>(context).isDone1
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500),
-            ),
-            trailing: Wrap(children: [
-              Checkbox(
-                  activeColor: Colors.white,
-                  checkColor: Colors.black,
-                  value: Provider.of<Controller>(context).isCheckedList[index],
-                  onChanged: (value) {
-                    Provider.of<Controller>(context, listen: false)
-                        .isCheckedList[index] = value!;
-                    Provider.of<Controller>(context, listen: false).isChecked();
-                  }),
-              IconButton(
-                  onPressed: (() {
-                    Provider.of<Controller>(context, listen: false)
-                        .taskList
-                        .removeAt(index);
-                    Provider.of<Controller>(context, listen: false).delete();
-                  }),
-                  icon: const Icon(Icons.delete))
-            ]));
-      },
-    );
+    return Consumer<Controller>(builder: (context, controller, child) {
+      return ListView.builder(
+          itemCount: Provider.of<Controller>(context).taskList.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+                title: Text(
+                  controller.taskList[index],
+                  style: TextStyle(
+                      decoration: controller.isCheckedList[index]
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
+                ),
+                trailing: Wrap(children: [
+                  Checkbox(
+                      activeColor: Colors.white,
+                      checkColor: Colors.black,
+                      value: controller.isCheckedList[index],
+                      onChanged: (value) {
+                        controller.isCheckedList[index] = value!;
+                        controller.isChecked();
+                      }),
+                  IconButton(
+                      onPressed: (() {
+                        controller.taskList.removeAt(index);
+                        controller.delete();
+                      }),
+                      icon: const Icon(Icons.delete))
+                ]));
+          });
+    });
   }
 }
