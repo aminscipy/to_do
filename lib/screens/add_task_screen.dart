@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-String? taskName;
-List<Widget> taskList = [];
+import 'package:provider/provider.dart';
+import 'package:to_do/screens/controller.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen({super.key});
@@ -28,7 +27,7 @@ class AddTaskScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: TextField(
               onChanged: (value) {
-                taskName = value;
+                Provider.of<Controller>(context, listen: false).taskName(value);
               },
               style: const TextStyle(
                   color: Colors.black, fontWeight: FontWeight.w600),
@@ -38,9 +37,9 @@ class AddTaskScreen extends StatelessWidget {
             height: 5,
           ),
           TextButton(
-            onPressed: (() {
-              taskList.add(Task(name: taskName));
-            }),
+            onPressed: () {
+              Provider.of<Controller>(context, listen: false).addTask();
+            },
             style: TextButton.styleFrom(backgroundColor: Colors.lightBlue),
             child: const Text(
               'Add',
@@ -50,47 +49,5 @@ class AddTaskScreen extends StatelessWidget {
         ]),
       ),
     );
-  }
-}
-
-class Task extends StatefulWidget {
-  const Task({super.key, this.name});
-  final String? name;
-
-  @override
-  State<Task> createState() => _TaskState();
-}
-
-class _TaskState extends State<Task> {
-  bool isDone = false;
-  String? name;
-
-  @override
-  void initState() {
-    super.initState();
-    name = widget.name;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        title: Text(
-          name!,
-          style: TextStyle(
-              decoration:
-                  isDone ? TextDecoration.lineThrough : TextDecoration.none,
-              color: Colors.black,
-              fontWeight: FontWeight.w500),
-        ),
-        trailing: Checkbox(
-          activeColor: Colors.white,
-          checkColor: Colors.black,
-          value: isDone,
-          onChanged: (value) {
-            setState(() {
-              isDone = value!;
-            });
-          },
-        ));
   }
 }

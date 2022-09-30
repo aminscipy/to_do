@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do/screens/add_task_screen.dart';
+import 'package:to_do/screens/controller.dart';
+import 'package:to_do/screens/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +52,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${taskList.length} tasks',
+                  '${Provider.of<Controller>(context).taskList.length} tasks',
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
@@ -74,7 +70,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20))),
-                  child: ListView(children: taskList)))
+                  child: const TaskData()))
         ],
       )),
     );
