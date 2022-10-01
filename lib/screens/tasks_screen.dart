@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/screens/add_task_screen.dart';
-import 'package:to_do/screens/controller.dart';
-import 'package:to_do/screens/task_data.dart';
+import 'package:to_do/controller.dart';
+import 'package:to_do/task_data.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});

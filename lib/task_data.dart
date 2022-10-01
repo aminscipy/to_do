@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do/screens/controller.dart';
+import 'package:to_do/controller.dart';
 
 class TaskData extends StatelessWidget {
   const TaskData({
@@ -21,21 +21,26 @@ class TaskData extends StatelessWidget {
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,
                       color: Colors.black,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.bold),
                 ),
-                trailing: Wrap(children: [
-                  Checkbox(
-                      activeColor: Colors.white,
-                      checkColor: Colors.black,
-                      value: controller.isCheckedList[index],
-                      onChanged: (value) {
-                        controller.isCheckedList[index] = value!;
-                        controller.isChecked();
-                      }),
+                trailing: Wrap(spacing: -15, children: [
+                  Theme(
+                    data: ThemeData(unselectedWidgetColor: Colors.black),
+                    child: Checkbox(
+                        activeColor: Colors.white,
+                        checkColor: Colors.black,
+                        value: controller.isCheckedList[index],
+                        onChanged: (value) {
+                          controller.isCheckedList[index] = value!;
+                          controller.isChecked();
+                        }),
+                  ),
                   IconButton(
+                      color: Colors.black,
                       onPressed: (() {
                         controller.taskList.removeAt(index);
                         controller.delete();
+                        controller.isCheckedList.removeAt(index);
                       }),
                       icon: const Icon(Icons.delete))
                 ]));
